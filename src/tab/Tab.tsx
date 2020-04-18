@@ -65,8 +65,8 @@ const Tab:FC<prop> = ({title, content}) => {
               onClick={(e) => handleClick(e)}
               onKeyDown={(e) => handleKey(e)}
             >
-        {title}
-      </a>
+              {title}
+            </a>
           </TabList>
         ))}
       </ul>
