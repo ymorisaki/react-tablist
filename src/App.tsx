@@ -1,6 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
 import Tab from './tab/Tab'
 import Hoge from './component/Hoge'
@@ -12,7 +10,15 @@ function App() {
     <>
       <Tab
         title={['Tab1', 'Tab2', 'Tab3']}
-        content={[<Hoge />, <Fuga />, <Piyo />]}
+        content={[
+          <Hoge>
+            <p><b>Tab1</b></p>
+            <button type="button">フォーカスチェック</button>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum quod eveniet in vitae ipsa sunt voluptate, perferendis non iusto saepe neque quibusdam delectus nihil voluptatem earum vel illo animi asperiores.<br />Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum quod eveniet in vitae ipsa sunt voluptate, perferendis non iusto saepe neque quibusdam delectus nihil voluptatem earum vel illo animi asperiores.<br />Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum quod eveniet in vitae ipsa sunt voluptate, perferendis non iusto saepe neque quibusdam delectus nihil voluptatem earum vel illo animi asperiores.</p>
+          </Hoge>,
+          <Fuga />,
+          <Piyo />
+        ]}
       />
     </>
   );

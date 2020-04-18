@@ -1,7 +1,11 @@
 import React, {FC} from 'react'
 
-const Hoge:FC = () => (
-  <p>Hoge</p>
-)
+const Hoge:FC = ({children}) => {
+  return(
+    <>
+    {children}
+    </>
+  )
+}
 
 export default Hoge

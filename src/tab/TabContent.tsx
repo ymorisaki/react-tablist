@@ -6,7 +6,6 @@ type prop = {
 }
 
 const TabContent:FC<prop> = ({id, state, children}) => {
-  console.log(state, id)
   return (
     <>
     {state === id &&

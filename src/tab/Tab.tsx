@@ -1,4 +1,4 @@
-import React, {FC, useState, useRef, MouseEvent} from 'react'
+import React, {FC, useState, useRef, MouseEvent, KeyboardEvent} from 'react'
 import styled from 'styled-components'
 
 import TabList from './TabList';
@@ -9,18 +9,10 @@ type prop = {
   content: any[]
 }
 
-type id = {
-  current: string[]
-}
-
-type count = {
-  current: number
-}
-
 const Tab:FC<prop> = ({title, content}) => {
   const randomStr = () => Math.random().toString(32).substring(2)
-  const randomId:id = useRef([]);
-  const renderCount:count = useRef(0)
+  const randomId:{current: string[]} = useRef([]);
+  const renderCount:{current: number} = useRef(0)
 
   if (renderCount.current === 0) {
     for (let i = 0, len = title.length; i < len; i++) {
@@ -34,6 +26,25 @@ const Tab:FC<prop> = ({title, content}) => {
   const handleClick = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault()
     setTabState(`${e.currentTarget.getAttribute('aria-controls')}`)
+    e.currentTarget.closest('ul[role="tablist"]')?.querySelectorAll('a').forEach(node => node.tabIndex = -1)
+    e.currentTarget.tabIndex = 0
+  }
+
+  const handleKey = (e: KeyboardEvent<HTMLAnchorElement>) => {
+    if (e.key === 'ArrowRight') {
+      if (e.currentTarget.parentElement?.nextElementSibling) {
+        e.currentTarget.tabIndex = -1
+        e.currentTarget.parentElement?.nextElementSibling.querySelector('a')?.setAttribute('tabindex', '0')
+        e.currentTarget.parentElement?.nextElementSibling.querySelector('a')?.focus()
+      }
+    }
+    if (e.key === 'ArrowLeft') {
+      if (e.currentTarget.parentElement?.previousElementSibling) {
+        e.currentTarget.tabIndex = -1
+        e.currentTarget.parentElement?.previousElementSibling.querySelector('a')?.focus()
+        e.currentTarget.parentElement?.previousElementSibling.querySelector('a')?.setAttribute('tabindex', '0')
+      }
+    }
   }
 
   return (
@@ -43,10 +54,12 @@ const Tab:FC<prop> = ({title, content}) => {
           <TabList key={randomId.current[index]}>
             <a
               href={`#${randomId.current[index]}`}
+              tabIndex={index === 0 ? 0 : -1}
               role="tab"
               aria-controls={randomId.current[index]}
               aria-selected={index === 0 ? true : false}
               onClick={(e) => handleClick(e)}
+              onKeyDown={(e) => handleKey(e)}
             >
         {title}
       </a>
