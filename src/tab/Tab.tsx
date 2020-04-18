@@ -34,26 +34,23 @@ const Tab:FC<prop> = ({title, content}) => {
     e.currentTarget.setAttribute('aria-selected', 'true')
   }
 
+  const keyMoveCurrent = (e: KeyboardEvent<HTMLAnchorElement>, target: Element | null | undefined) => {
+    if (target) {
+      e.currentTarget.tabIndex = -1
+      target.querySelector('a')?.focus()
+      target.querySelector('a')?.setAttribute('tabindex', '0')
+      setTabState(`${target.querySelector('a')?.getAttribute('aria-controls')}`)
+      e.currentTarget.setAttribute('aria-selected', 'false')
+      target.querySelector('a')?.setAttribute('aria-selected', 'true')
+    }
+  }
+
   const handleKey = (e: KeyboardEvent<HTMLAnchorElement>) => {
     if (e.key === 'ArrowRight') {
-      if (e.currentTarget.parentElement?.nextElementSibling) {
-        e.currentTarget.tabIndex = -1
-        e.currentTarget.parentElement?.nextElementSibling.querySelector('a')?.focus()
-        e.currentTarget.parentElement?.nextElementSibling.querySelector('a')?.setAttribute('tabindex', '0')
-        setTabState(`${e.currentTarget.parentElement?.nextElementSibling.querySelector('a')?.getAttribute('aria-controls')}`)
-        e.currentTarget.setAttribute('aria-selected', 'false')
-        e.currentTarget.parentElement?.nextElementSibling.querySelector('a')?.setAttribute('aria-selected', 'true')
-      }
+      keyMoveCurrent(e, e.currentTarget.parentElement?.nextElementSibling)
     }
     if (e.key === 'ArrowLeft') {
-      if (e.currentTarget.parentElement?.previousElementSibling) {
-        e.currentTarget.tabIndex = -1
-        e.currentTarget.parentElement?.previousElementSibling.querySelector('a')?.focus()
-        e.currentTarget.parentElement?.previousElementSibling.querySelector('a')?.setAttribute('tabindex', '0')
-        setTabState(`${e.currentTarget.parentElement?.previousElementSibling.querySelector('a')?.getAttribute('aria-controls')}`)
-        e.currentTarget.setAttribute('aria-selected', 'false')
-        e.currentTarget.parentElement?.previousElementSibling.querySelector('a')?.setAttribute('aria-selected', 'true')
-      }
+      keyMoveCurrent(e, e.currentTarget.parentElement?.previousElementSibling)
     }
   }
 
