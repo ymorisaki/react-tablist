@@ -1,12 +1,11 @@
 import React, {FC, useState, useRef, MouseEvent, KeyboardEvent} from 'react'
 import styled from 'styled-components'
 
-import TabList from './TabList';
 import TabContent from './TabContent';
 
 type prop = {
   title: string[]
-  content: any[]
+  content: JSX.Element[]
 }
 
 const Tab:FC<prop> = ({title, content}) => {
