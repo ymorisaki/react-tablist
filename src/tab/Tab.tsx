@@ -40,6 +40,9 @@ const Tab:FC<prop> = ({title, content}) => {
         e.currentTarget.tabIndex = -1
         e.currentTarget.parentElement?.nextElementSibling.querySelector('a')?.focus()
         e.currentTarget.parentElement?.nextElementSibling.querySelector('a')?.setAttribute('tabindex', '0')
+        setTabState(`${e.currentTarget.parentElement?.nextElementSibling.querySelector('a')?.getAttribute('aria-controls')}`)
+        e.currentTarget.setAttribute('aria-selected', 'false')
+        e.currentTarget.parentElement?.nextElementSibling.querySelector('a')?.setAttribute('aria-selected', 'true')
       }
     }
     if (e.key === 'ArrowLeft') {
@@ -47,6 +50,9 @@ const Tab:FC<prop> = ({title, content}) => {
         e.currentTarget.tabIndex = -1
         e.currentTarget.parentElement?.previousElementSibling.querySelector('a')?.focus()
         e.currentTarget.parentElement?.previousElementSibling.querySelector('a')?.setAttribute('tabindex', '0')
+        setTabState(`${e.currentTarget.parentElement?.previousElementSibling.querySelector('a')?.getAttribute('aria-controls')}`)
+        e.currentTarget.setAttribute('aria-selected', 'false')
+        e.currentTarget.parentElement?.previousElementSibling.querySelector('a')?.setAttribute('aria-selected', 'true')
       }
     }
   }
@@ -61,7 +67,7 @@ const Tab:FC<prop> = ({title, content}) => {
               tabIndex={index === 0 ? 0 : -1}
               role="tab"
               aria-controls={randomId.current[index]}
-              aria-selected={index === 0 ? true : false}
+              aria-selected={index === 0 ? 'true' : 'false'}
               onClick={(e) => handleClick(e)}
               onKeyDown={(e) => handleKey(e)}
             >
