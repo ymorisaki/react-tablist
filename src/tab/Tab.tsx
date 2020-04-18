@@ -9,33 +9,56 @@ type prop = {
   content: any[]
 }
 
-const Tab:FC<prop> = ({title, content}) => {
-  const createRandom = () => Math.random().toString(32).substring(2)
-  const randomId: string[] = [];
+type id = {
+  current: string[]
+}
 
-  for (let i = 0, len = title.length; i < len; i++) {
-    randomId.push(`tab-${createRandom()}`)
+type count = {
+  current: number
+}
+
+const Tab:FC<prop> = ({title, content}) => {
+  const randomStr = () => Math.random().toString(32).substring(2)
+  const randomId:id = useRef([]);
+  const renderCount:count = useRef(0)
+
+  if (renderCount.current === 0) {
+    for (let i = 0, len = title.length; i < len; i++) {
+      randomId.current.push(`tab-${randomStr()}`)
+    }
+    renderCount.current++
   }
 
-  console.log(content)
+  const [tabState, setTabState] = useState(randomId.current[0])
+
+  const handleClick = (e: MouseEvent<HTMLElement>) => {
+    e.preventDefault()
+    setTabState(`${e.currentTarget.getAttribute('aria-controls')}`)
+  }
 
   return (
     <TabSC>
       <ul role="tablist">
         {title.map((title: string, index: number) => (
-          <TabList
-            title={title}
-            id={randomId[index]}
-            key={randomId[index]}
-            select={index === 0 ? true : false}
-          />
+          <TabList key={randomId.current[index]}>
+            <a
+              href={`#${randomId.current[index]}`}
+              role="tab"
+              aria-controls={randomId.current[index]}
+              aria-selected={index === 0 ? true : false}
+              onClick={(e) => handleClick(e)}
+            >
+        {title}
+      </a>
+          </TabList>
         ))}
       </ul>
       <div>
         {content.map((content, index) => (
           <TabContent
-            id={randomId[index]}
-            key={randomId[index]}
+            id={randomId.current[index]}
+            key={randomId.current[index]}
+            state={tabState}
           >
             {content}
           </TabContent>
