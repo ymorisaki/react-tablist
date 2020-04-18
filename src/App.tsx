@@ -11,13 +11,20 @@ function App() {
       <Tab
         title={['Tab1', 'Tab2', 'Tab3']}
         content={[
-          <Hoge>
-            <p><b>Tab1</b></p>
-            <button type="button">フォーカスチェック</button>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum quod eveniet in vitae ipsa sunt voluptate, perferendis non iusto saepe neque quibusdam delectus nihil voluptatem earum vel illo animi asperiores.<br />Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum quod eveniet in vitae ipsa sunt voluptate, perferendis non iusto saepe neque quibusdam delectus nihil voluptatem earum vel illo animi asperiores.<br />Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum quod eveniet in vitae ipsa sunt voluptate, perferendis non iusto saepe neque quibusdam delectus nihil voluptatem earum vel illo animi asperiores.</p>
-          </Hoge>,
-          <Fuga />,
-          <Piyo />
+          <Hoge title={'Tab1'} />,
+          <Fuga title={'Tab2'} />,
+          <Piyo title={'Tab3'} />
+        ]}
+      />
+
+      <Tab
+        title={['Tab4', 'Tab5', 'Tab6', 'Tab7', 'Tab8']}
+        content={[
+          <Piyo title={'Tab4'} />,
+          <Hoge title={'Tab5'} />,
+          <Fuga title={'Tab6'} />,
+          <Piyo title={'Tab7'} />,
+          <Hoge title={'Tab8'} />
         ]}
       />
     </>
