@@ -113,8 +113,25 @@ const TabSC:FC = styled.div`
   }
 
   div[role="tabpanel"] {
-    padding: 10px 20px;
+    padding: 20px 40px;
     border: 1px solid #ccc;
+
+    p {
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    b {
+      font-weight: normal;
+      font-size: 22px;
+    }
+
+    button {
+      margin-bottom: 20px;
+      padding: 5px 20px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+    }
   }
 `
 
