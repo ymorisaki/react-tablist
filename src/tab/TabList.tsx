@@ -2,7 +2,7 @@ import React, {FC} from 'react'
 
 const TabList:FC = ({children}) => {
   return (
-    <li role="tablist">
+    <li role="presentation">
       {children}
     </li>
   )

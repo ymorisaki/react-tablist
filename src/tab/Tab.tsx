@@ -26,16 +26,20 @@ const Tab:FC<prop> = ({title, content}) => {
   const handleClick = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault()
     setTabState(`${e.currentTarget.getAttribute('aria-controls')}`)
-    e.currentTarget.closest('ul[role="tablist"]')?.querySelectorAll('a').forEach(node => node.tabIndex = -1)
+    e.currentTarget.closest('ul[role="tablist"]')?.querySelectorAll('a').forEach(node => {
+      node.tabIndex = -1
+      node.setAttribute('aria-selected', 'false')
+    })
     e.currentTarget.tabIndex = 0
+    e.currentTarget.setAttribute('aria-selected', 'true')
   }
 
   const handleKey = (e: KeyboardEvent<HTMLAnchorElement>) => {
     if (e.key === 'ArrowRight') {
       if (e.currentTarget.parentElement?.nextElementSibling) {
         e.currentTarget.tabIndex = -1
-        e.currentTarget.parentElement?.nextElementSibling.querySelector('a')?.setAttribute('tabindex', '0')
         e.currentTarget.parentElement?.nextElementSibling.querySelector('a')?.focus()
+        e.currentTarget.parentElement?.nextElementSibling.querySelector('a')?.setAttribute('tabindex', '0')
       }
     }
     if (e.key === 'ArrowLeft') {
@@ -82,6 +86,36 @@ const Tab:FC<prop> = ({title, content}) => {
 };
 
 const TabSC:FC = styled.div`
+  margin-bottom: 100px;
+
+  > ul[role="tablist"] {
+    display: flex;
+    padding: 0;
+
+    > li {
+      margin-top: 0;
+      margin-bottom: 0;
+      list-style: none;
+      background-color: #ddd;
+
+      > a {
+        display: block;
+        padding: 10px 30px;
+        text-decoration: none;
+        color: #000;
+
+        &[aria-selected="true"] {
+          background-color: #000;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  div[role="tabpanel"] {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+  }
 `
 
 export default Tab

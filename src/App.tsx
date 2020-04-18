@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components'
 
 import Tab from './tab/Tab'
 import Hoge from './component/Hoge'
@@ -8,6 +9,7 @@ import Piyo from './component/Piyo'
 function App() {
   return (
     <>
+      <Wrap>
       <Tab
         title={['Tab1', 'Tab2', 'Tab3']}
         content={[
@@ -27,8 +29,15 @@ function App() {
           <Hoge title={'Tab8'} />
         ]}
       />
+      </Wrap>
     </>
   );
 }
+
+const Wrap = styled.div`
+  max-width: 1000px;
+  margin: auto;
+  padding: 30px;
+`
 
 export default App;
