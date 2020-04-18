@@ -6,7 +6,7 @@ import Tab from './tab/Tab'
 function App() {
   return (
     <>
-      <Tab />
+      <Tab title={['Tab1', 'Tab2', 'Tab3']} />
     </>
   );
 }
