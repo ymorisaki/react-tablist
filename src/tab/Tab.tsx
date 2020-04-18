@@ -61,7 +61,7 @@ const Tab:FC<prop> = ({title, content}) => {
     <TabSC>
       <ul role="tablist">
         {title.map((title: string, index: number) => (
-          <TabList key={randomId.current[index]}>
+          <li key={randomId.current[index]}>
             <a
               href={`#${randomId.current[index]}`}
               tabIndex={index === 0 ? 0 : -1}
@@ -73,7 +73,7 @@ const Tab:FC<prop> = ({title, content}) => {
             >
               {title}
             </a>
-          </TabList>
+          </li>
         ))}
       </ul>
       <div>
