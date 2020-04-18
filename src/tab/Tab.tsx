@@ -57,7 +57,7 @@ const Tab:FC<prop> = ({title, content}) => {
     <TabSC>
       <ul role="tablist">
         {title.map((title: string, index: number) => (
-          <li key={randomId.current[index]}>
+          <li role="presentation" key={randomId.current[index]}>
             <a
               href={`#${randomId.current[index]}`}
               tabIndex={index === 0 ? 0 : -1}
