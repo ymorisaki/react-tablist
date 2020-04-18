@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Tab from './Tab'
+import Tab from './tab/Tab'
 
 function App() {
   return (
