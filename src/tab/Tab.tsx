@@ -33,7 +33,7 @@ const Tab:FC<prop> = ({title, content}) => {
     e.currentTarget.setAttribute('aria-selected', 'true')
   }
 
-  const keyMoveCurrent = (e: KeyboardEvent<HTMLAnchorElement>, target: Element | null | undefined) => {
+  const keyDownMove = (e: KeyboardEvent<HTMLAnchorElement>, target: Element | null | undefined) => {
     if (target) {
       e.currentTarget.tabIndex = -1
       target.querySelector('a')?.focus()
@@ -46,10 +46,10 @@ const Tab:FC<prop> = ({title, content}) => {
 
   const handleKey = (e: KeyboardEvent<HTMLAnchorElement>) => {
     if (e.key === 'ArrowRight') {
-      keyMoveCurrent(e, e.currentTarget.parentElement?.nextElementSibling)
+      keyDownMove(e, e.currentTarget.parentElement?.nextElementSibling)
     }
     if (e.key === 'ArrowLeft') {
-      keyMoveCurrent(e, e.currentTarget.parentElement?.previousElementSibling)
+      keyDownMove(e, e.currentTarget.parentElement?.previousElementSibling)
     }
   }
 
