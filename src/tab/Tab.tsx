@@ -1,8 +1,6 @@
 import React, {FC, useState, useRef, MouseEvent, KeyboardEvent} from 'react'
 import styled from 'styled-components'
 
-import TabContent from './TabContent';
-
 type prop = {
   title: string[]
   content: JSX.Element[]
@@ -25,22 +23,26 @@ const Tab:FC<prop> = ({title, content}) => {
   const handleClick = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault()
     setTabState(`${e.currentTarget.getAttribute('aria-controls')}`)
-    e.currentTarget.closest('ul[role="tablist"]')?.querySelectorAll('a').forEach(node => {
-      node.tabIndex = -1
-      node.setAttribute('aria-selected', 'false')
-    })
-    e.currentTarget.tabIndex = 0
-    e.currentTarget.setAttribute('aria-selected', 'true')
   }
 
-  const keyDownMove = (e: KeyboardEvent<HTMLAnchorElement>, target: Element | null | undefined) => {
+  const keyDownMove = (e: KeyboardEvent<HTMLAnchorElement> | any, target: Element | null | undefined) => {
     if (target) {
-      e.currentTarget.tabIndex = -1
       target.querySelector('a')?.focus()
-      target.querySelector('a')?.setAttribute('tabindex', '0')
       setTabState(`${target.querySelector('a')?.getAttribute('aria-controls')}`)
-      e.currentTarget.setAttribute('aria-selected', 'false')
-      target.querySelector('a')?.setAttribute('aria-selected', 'true')
+    } else if (
+      !target &&
+      e.currentTarget.closest('.tablist') &&
+      e.key === 'ArrowRight'
+    ) {
+      setTabState(e.currentTarget.closest('.tablist')?.querySelector(`:scope > li:first-child > a`).getAttribute('aria-controls'))
+      e.currentTarget.closest('.tablist')?.querySelector(':scope > li:first-child > a')?.focus()
+    } else if (
+      !target &&
+      e.currentTarget.closest('.tablist') &&
+      e.key === 'ArrowLeft'
+    ) {
+      setTabState(e.currentTarget.closest('.tablist')?.querySelector(`:scope > li:last-child > a`).getAttribute('aria-controls'))
+      e.currentTarget.closest('.tablist')?.querySelector(':scope > li:last-child > a')?.focus()
     }
   }
 
@@ -55,15 +57,15 @@ const Tab:FC<prop> = ({title, content}) => {
 
   return (
     <TabSC>
-      <ul role="tablist">
+      <ul className="tablist" role="tablist">
         {title.map((title: string, index: number) => (
           <li role="presentation" key={randomId.current[index]}>
             <a
               href={`#${randomId.current[index]}`}
-              tabIndex={index === 0 ? 0 : -1}
+              tabIndex={tabState === randomId.current[index] ? 0 : -1}
               role="tab"
               aria-controls={randomId.current[index]}
-              aria-selected={index === 0 ? 'true' : 'false'}
+              aria-selected={tabState === randomId.current[index]}
               onClick={(e) => handleClick(e)}
               onKeyDown={(e) => handleKey(e)}
             >
@@ -74,13 +76,14 @@ const Tab:FC<prop> = ({title, content}) => {
       </ul>
       <div>
         {content.map((content, index) => (
-          <TabContent
+          <div
             id={randomId.current[index]}
             key={randomId.current[index]}
-            state={tabState}
+            hidden={tabState === randomId.current[index] ? false : true}
+            role="tabpanel"
           >
             {content}
-          </TabContent>
+          </div>
         ))}
       </div>
     </TabSC>
